@@ -1,0 +1,104 @@
+<Label>
+    font_name:"Segoeuib"
+
+<Button>
+    background_normal:''
+    background_color: "#FFDE25"
+    color: (0,0,0,1)
+    size_hint:(0.7,0.1)
+    pos_hint_y: {}
+    font_size: 20
+    font_name:"Impact"
+
+RootWidget:
+    canvas.before:
+        Color:
+            rgba: (45/255,45/255,45/255,1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    orientation: 'vertical'
+
+    exercise:'bench-press'
+    padding:20
+
+
+    GridLayout:
+        cols:1
+        padding:10
+        spacing:5
+        Label:
+            text:"Gym Tracker"
+            font_size: 68
+            font_name: "./ARMY RUST.ttf"
+            size_hint:(0.7,0.4)
+
+        GridLayout:
+            cols:3
+            size_hint:(0.3,0.17)
+            Button:
+                text: "Previous exercise"
+                background_color: (249/255,238/255,129/255,0.8)
+                on_press: root.prev_exercise()
+            Label:
+                text:root.exercises[0]
+                id:exercise
+                font_name:"Segoeuib"
+                font_size: 20
+            Button:
+                text: "Next exercise"
+                background_color: (249/255,238/255,129/255,0.8)
+                on_press: root.next_exercise()
+
+        GridLayout:
+            cols:4
+            Label:
+                id:kg
+                text: str(root.stored_data.get(exercise.text)['kg']) if root.stored_data.exists(exercise.text) else ''
+                font_size:55
+            Label:
+                text: "Kg"
+                font_size: 40
+            Button:
+                text: "2.5 +"
+                on_press: root.more_kg()
+            Button:
+                text: "- 2.5"
+                on_press: root.less_kg()
+                background_color: "#FFBA26"
+
+            Label:
+                id:sets
+                text: root.stored_data.get(exercise.text)['sets'] if root.stored_data.exists(exercise.text) else ''
+                font_size: 55
+            Label:
+                text: "Sets"
+                font_size: 40
+            Button:
+                text: "1 +"
+                on_press: root.more_sets()
+            Button:
+                text: "- 1"
+                on_press: root.less_sets()
+                background_color: "#FFBA26"
+
+            Label:
+                id:reps
+                text: root.stored_data.get(exercise.text)['reps'] if root.stored_data.exists(exercise.text) else ''
+                font_size:55
+            Label:
+                text: "Reps"
+                font_size: 40
+            Button:
+                text: "1 +"
+                on_press: root.more_reps()
+            Button:
+                text: "- 1"
+                on_press: root.less_reps()
+                background_color: "#FFBA26"
+    Button:
+        text: 'Save'
+        on_press:
+            root.stored_data.put(exercise.text, kg=kg.text, sets=sets.text,reps=reps.text)
+        size_hint:(1,0.2)
+

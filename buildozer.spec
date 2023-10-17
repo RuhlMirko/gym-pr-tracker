@@ -6,7 +6,7 @@
 [app]
 
 # (str) Title of your application
-title = Gym Tracker
+title = myapp
 
 # (str) Package name
 package.name = myapp
